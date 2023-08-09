@@ -5,8 +5,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 In the project directory, you can run:
+### `git clone` to clone the project to local
+cmd : "git clone https://github.com/manindersingh41/react-base2brand-test"
 
-### `npm start`
+### `npm install` to install node_modules 
+
+### `npx json-server --watch data/db.json --port 8000` to run json server to stimulate db.json
+Disclaimer: Don't use port other than 8000. As port 8000 is used in fetching data from db.json
+
+### `npm start` to start react server
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
@@ -68,3 +75,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
