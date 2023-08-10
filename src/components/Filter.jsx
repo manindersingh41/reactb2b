@@ -128,6 +128,7 @@ const Filter = () => {
           
           
           const handleSearch = () => {
+            setCurrentPage(1)
             if(searchTerm === ''){
               setFilteredUsers(users)
             }
