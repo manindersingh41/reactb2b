@@ -1,6 +1,6 @@
 import React from 'react'
-import { useParams } from 'react-router-dom';
-import { useAppContext } from '../context/appContext';
+import { useParams, useLocation } from 'react-router-dom';
+// import { useAppContext } from '../context/appContext';
 import styled from 'styled-components'
 import Avatar from 'react-avatar';
 
@@ -72,15 +72,22 @@ const Wrapper = styled.div.attrs({
 `
 const UserDetails = () => {
 
-  const {user, getUser} = useAppContext();
-  console.log(user)
+  // const {user, getUser} = useAppContext();
   const { id } = useParams();
+  const location = useLocation();
+  const user = location.state?.user
+
+  console.log(location)
+ 
+  if (!user) {
+    return <div>No data found.</div>;
+  }
 
 
-  React.useEffect(() => {
-   getUser(id);
-   // eslint-disable-next-line
-  }, [ id])
+  // React.useEffect(() => {
+  // //  getUser(id);
+  //  // eslint-disable-next-line
+  // }, [id])
   return (
     <Wrapper>
       <div className="details-wrapper">
@@ -88,7 +95,7 @@ const UserDetails = () => {
         <Avatar name={user?.name} size="300"  round="50%" />
         </div>
         <div className="user-info">
-            <p><strong>ID:</strong> {user?.id}</p>
+            <p><strong>ID:</strong> {id}</p>
             <p><strong>Name:</strong> {user?.name}</p>
             <p><strong>Email:</strong> {user?.email}</p>
             <p><strong>Role:</strong> {user?.role}</p>

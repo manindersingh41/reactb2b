@@ -1,5 +1,5 @@
 import React, { useEffect,useCallback , useMemo} from 'react'
-import { Link } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/appContext';
 import _debounce from 'lodash/debounce';
 import styled from 'styled-components';
@@ -90,6 +90,11 @@ td {
     font-size: 13px;
   }
 
+  .view-details {
+    color: blue;
+    text-decoration: underline;
+  }
+
   
 }
 
@@ -97,9 +102,13 @@ td {
 const Filter = () => {
 
     
-    const {users, searchTerm, filteredUsers, setSearchTerm, setFilteredUsers, getAllUsers, currentPage, itemsPerPage, setCurrentPage} = useAppContext();
+    const {users, searchTerm, filteredUsers, setSearchTerm, setFilteredUsers, getAllUsers, currentPage, itemsPerPage,dummyData, setCurrentPage} = useAppContext();
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
+    const navigate = useNavigate();
+
+    console.log(navigate)
+
 
     useEffect(() => {
       getAllUsers();
@@ -122,7 +131,7 @@ const Filter = () => {
             if(searchTerm === ''){
               setFilteredUsers(users)
             }
-            const filtered = users.filter(user => {
+            const filtered = (users ? users : dummyData).filter(user => {
               return user.name.toLowerCase().includes(searchTerm.toLowerCase()) 
               || user.email.toLowerCase().includes(searchTerm.toLowerCase()) 
               || user.role.toLowerCase().includes(searchTerm.toLowerCase()) 
@@ -136,6 +145,11 @@ const Filter = () => {
           const debouncedHandleSearch =   _debounce(handleSearch, 400); // Adjust the debounce delay as needed (in milliseconds)
           const memoizedHandleChange = useCallback(handleChange, [ setSearchTerm, debouncedHandleSearch])
     const visibleUsers = useMemo(() => filteredUsers.slice(startIndex, endIndex), [filteredUsers, startIndex, endIndex]);
+
+
+    const navigateToUserDetails = (id, userObj) => {
+        navigate(`/details/${id}`, {state: userObj})
+    };
 
   return (
     <Wrapper>
@@ -174,7 +188,10 @@ const Filter = () => {
               {/* <td>{user.role}</td>
               <td>{user.dateJoined}</td> */}
               <td>
-                <Link to={`/details/${user.id}`}>View Details</Link>
+                {/* <Link to={{ pathname: `/details/${user.id}`, state:  user  }}>View Details</Link> */}
+                <p className='view-details' onClick={() => navigateToUserDetails(user.id, {user})}>View Details</p>
+
+
                 </td>
             </tr>
           ))}
